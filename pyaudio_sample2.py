@@ -1,13 +1,13 @@
 import pyaudio
-import wave
 import time
 import sys
 
-if len(sys.argv) < 2:
-    print("Plays a wave file.\n\nUsage: %s filename.wav" % sys.argv[0])
+if len(sys.argv) < 3:
+    print("Plays a raw file.\n\nUsage: %s filename.wav framerate" % sys.argv[0])
     sys.exit(-1)
 
-wf = wave.open(sys.argv[1], 'rb')
+f = file(sys.argv[1], 'rb')
+fr = int(sys.argv[2])
 
 # instantiate PyAudio (1)
 p = pyaudio.PyAudio()
@@ -15,15 +15,13 @@ p = pyaudio.PyAudio()
 # define callback (2)
 def callback(in_data, frame_count, time_info, status):
     print(in_data, frame_count, time_info, status) 
-    data = wf.readframes(frame_count)
+    data = f.read(2*frame_count)
     return (data, pyaudio.paContinue)
 
 # open stream using callback (3)
-print wf.getsampwidth()
-print p.get_format_from_width(wf.getsampwidth())
-stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                channels=wf.getnchannels(),
-                rate=wf.getframerate(),
+stream = p.open(format=pyaudio.paInt16,
+                channels=1,
+                rate=fr,
                 output=True,
                 stream_callback=callback)
 
@@ -37,7 +35,7 @@ while stream.is_active():
 # stop stream (6)
 stream.stop_stream()
 stream.close()
-wf.close()
+f.close()
 
 # close PyAudio (7)
 p.terminate()
