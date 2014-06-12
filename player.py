@@ -5,15 +5,6 @@ import pyaudio
 import time
 
 
-f = file(sys.argv[1], 'rb')
-s = f.read()
-f.close()
-sio = StringIO.StringIO(s)
-fr = int(sys.argv[2])
-
-# instantiate PyAudio (1)
-p = pyaudio.PyAudio()
-
 class Player(object):
     """
     Wrapper around the pyaudio handler.
