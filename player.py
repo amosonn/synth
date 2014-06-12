@@ -25,6 +25,7 @@ class Player(object):
     def play(self,stream,rate=44100,width=2,channels=1):
         """
         Play a Stream object (see base_stream).
+        raises: StreamPlayingError
         """
         if self._stream is not None:
             if self._stream.is_active():
