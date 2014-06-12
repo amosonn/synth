@@ -11,4 +11,4 @@ def sine_iter(length,freq,samprate):
     for i in xrange(int(length*samprate)):
         d = math.sin((float(i)/samprate)*freq*2*math.pi)
         x = int(d*3000)+8000
-        yield chr(x&(1<<8-1)) + chr(x>>8)
+        yield (chr(x&(1<<8-1)) + chr(x>>8),2)
