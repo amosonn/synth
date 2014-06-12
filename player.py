@@ -29,7 +29,8 @@ class Player(object):
             data = stream.read(width*frame_count)
             return (data, pyaudio.paContinue)
 
-        self._stream = self._p.open(format=p.get_format_from_width(width),
+        fmt = self._p.get_format_from_width(width)
+        self._stream = self._p.open(format=fmt,
                         channels=channels,
                         rate=rate,
                         output=True,
