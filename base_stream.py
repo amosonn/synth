@@ -7,8 +7,8 @@ class BaseStream(object):
         close() - closes the stream.
     """
 
-    def read(n):
+    def read(self,n):
         raise NotImplementedError()
 
-    def close():
+    def close(self):
         raise NotImplementedError()

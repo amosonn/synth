@@ -13,7 +13,7 @@ class StrIterStream(BaseStream):
         # This is an optimization.
         self._buflen = 0
 
-    def read(n):
+    def read(self,n):
         """
         Return n bytes received, cumulatively, from the iterator.
         raises: BadStrIter
@@ -39,7 +39,7 @@ class StrIterStream(BaseStream):
             self._buflen = 0
         return out
     
-    def close():
+    def close(self):
         pass
 
 class BadStrIter(Exception):
