@@ -1,11 +1,11 @@
 """
 StrIterStream.
 """
-from base_stream import BaseStream
+from streams.base_stream import BaseStream
 
 class StrIterStream(BaseStream):
     """
-    Stream wrapper for an iterator that yields strings (or (str,length) tuples).
+    Stream wrapper for an iterator that yields (str,length) tuples.
     """
     def __init__(self,iter):
         self._iter = iter
@@ -16,20 +16,13 @@ class StrIterStream(BaseStream):
     def read(self,n):
         """
         Return n bytes received, cumulatively, from the iterator.
-        raises: BadStrIter
         """
         while n > self._buflen:
             try:
                 a = self._iter.next()
             except StopIteration:
                 break
-            if isinstance(a,tuple):
-                s,slen = a
-            elif isinstance(a,(str,unicode)):
-                s = a
-                slen = len(s)
-            else:
-                raise BadStrIter()
+            s,slen = a
             self._buf += s
             self._buflen += slen
         out = self._buf[:n]
@@ -41,6 +34,3 @@ class StrIterStream(BaseStream):
     
     def close(self):
         pass
-
-class BadStrIter(Exception):
-    pass
