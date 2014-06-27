@@ -4,7 +4,6 @@ Class for playing byte-streams to audio.
 import pyaudio
 import time
 
-
 class Player(object):
     """
     Wrapper around the pyaudio handler.
