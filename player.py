@@ -51,3 +51,4 @@ class Player(object):
 
 class StreamPlayingError(Exception):
     pass
+
