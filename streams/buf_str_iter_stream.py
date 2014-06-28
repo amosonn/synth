@@ -1,7 +1,8 @@
 """
 BufStrIterStream.
 """
-from streams.base_stream import BaseStream, StrIterStream
+from synth.streams.base_stream import BaseStream
+from synth.streams.str_iter_stream import  StrIterStream
 
 class BufStrIterStream(BaseStream):
     """

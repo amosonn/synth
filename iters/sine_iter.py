@@ -3,7 +3,7 @@ sine_iter
 """
 import math
 
-from decorators import length
+from synth.decorators import length
 
 @length(lambda length,f,a=0,samprate=44100: length*samprate)
 def sine_iter(length,freq,amp=1,samprate=44100):
