@@ -17,5 +17,6 @@ class num_to_str_iter(object):
         return self
 
     def next(self):
-        x = self._iter.next()
-        return (chr(x&0xff) + chr(((x>>8)&0xff)^0x80),2)
+        vals,n = self._iter.next()
+        return "".join([chr(x&0xff) + chr(((x>>8)&0xff)^0x80) for x in vals]), \
+            2*n
