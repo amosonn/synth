@@ -1,7 +1,7 @@
 """
 StrIterStream.
 """
-from streams.base_stream import BaseStream
+from synth.streams.base_stream import BaseStream
 
 class StrIterStream(BaseStream):
     """
