@@ -1,7 +1,7 @@
-from out.player import Player
-from iters.sine_iter import sine_iter
-from iters.num_to_str_iter import num_to_str_iter
-from streams.str_iter_stream import StrIterStream
+from synth.out.player import Player
+from synth.iters.sine_iter import sine_iter
+from synth.iters.num_to_str_iter import num_to_str_iter
+from synth.streams.str_iter_stream import StrIterStream
 
 def test_sine():
     p = Player()
