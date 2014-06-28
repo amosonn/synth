@@ -25,21 +25,8 @@ class length(object):
                 return iself
 
             def next(iself):
-                value,length = iself._g.next()
-                iself._l -= length
-                return (value,length)
+                value = iself._g.next()
+                iself._l -= len(value)
+                return value
 
         return G
-
-def yield_len(g):
-    """
-    Makes a generator yield a (value,length) tuple, where value is the
-    original yield value and length is len(value).
-    """
-    @wraps(g)
-    def _g(*args,**kwargs):
-        for i in g(*args,**kwargs):
-            yield (i,len(i))
-
-    return _g
-

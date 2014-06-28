@@ -15,4 +15,4 @@ def sine_iter(length,freq,amp=1,samprate=44100):
     k1 = float(freq)*2*math.pi/samprate
     k2 = 0x7fff*amp
     for i in xrange(int(length*samprate)):
-        yield [int(math.sin(i*k1)*k2 + 0.5)],1
+        yield (int(math.sin(i*k1)*k2 + 0.5),)
