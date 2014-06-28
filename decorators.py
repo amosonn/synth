@@ -5,17 +5,18 @@ from functools import wraps
 
 class length(object):
     """
-    Sets a (value,length) generator's length.
+    Sets a (value,length) generator's length, by passing its arguments to
+    a helper function which calculates its length.
     """
-    def __init__(self,l):
-        self._l = l
+    def __init__(self,lenf):
+        self._lenf = lenf
 
     def __call__(self,g):
         @wraps(g,("__module__","__name__"),())
         class G(object):
             def __init__(iself,*args,**kwargs):
+                iself._l = self._lenf(*args,**kwargs)
                 iself._g = g(*args,**kwargs)
-                iself._l = self._l
 
             def __len__(iself):
                 return iself._l

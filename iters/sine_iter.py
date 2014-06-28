@@ -3,6 +3,9 @@ sine_iter
 """
 import math
 
+from decorators import length
+
+@length(lambda length,f,a=0,samprate=44100: length*samprate)
 def sine_iter(length,freq,amp=1,samprate=44100):
     """
     A string iterator that returns a 2-bytes representation of a sine wave,
