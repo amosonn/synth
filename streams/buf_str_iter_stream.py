@@ -16,8 +16,9 @@ class BufStrIterStream(BaseStream):
         first_buflen = len(iter) * frac
         self._iter_stream = StrIterStream(iter)
         # fraction residue from each read.
-        self._res = 0
-        self._buf = ""
+        int_first_buflen = int(first_buflen)
+        self._res = first_buflen - int_first_buflen
+        self._buf = self._iter_stream.read(int_first_buflen)
 
     def read(self,n):
         """
