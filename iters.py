@@ -4,7 +4,7 @@ iterators.
 import math
 import itertools as it
 
-from .decorators import streamify
+from .tools import streamify
 
 @streamify
 def sine_iter(freq,amp=1,samprate=44100):

@@ -3,6 +3,7 @@ wav_write.
 """
 import wave
 from audiolazy import AudioIO
+from .tools import buffer_stream
 
 def wav_write(fname,stream,rate=44100,width=2,channels=1):
     """

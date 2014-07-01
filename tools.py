@@ -14,7 +14,7 @@ def streamify(gen):
         return Stream(g)
     return _g
 
-@stream
+@streamify
 def buffer_stream(stream,length,frac):
     """
     Assuming only a given length of a given stream is wanted, buffers
