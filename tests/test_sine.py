@@ -18,7 +18,7 @@ def test_sine():
 
     #assert raw_input("Did you hear a sound? [N/y]") in "yY"
 
-def test_two_sines_buffered(tmpdir):
+def not_test_two_sines_buffered(tmpdir):
     p = Player()
     si440 = sine_iter(2,440)
     si660 = sine_iter(2,660)
