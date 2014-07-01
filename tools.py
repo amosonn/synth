@@ -2,7 +2,7 @@
 Various tools for easier work.
 """
 from functools import wraps
-from audiolazy import Stream
+from audiolazy import Stream, sHz
 import math
 
 def streamify(gen):
