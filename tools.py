@@ -41,7 +41,15 @@ def buffer_stream(stream,length,frac):
                 break
             buf.append(val)
             rem -= 1000
-        yield buf[0]
+        if len(buf) > 0:
+            yield buf[0]
+        else:
+            try:
+                stream.take()
+            except StopIteration:
+                break
+            else:
+                raise AssertionError("Iterator should be empty.")
         del buf[0]
 
 def amp(freq,h,t):
