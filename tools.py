@@ -3,6 +3,7 @@ Various tools for easier work.
 """
 from functools import wraps
 from audiolazy import Stream
+import math
 
 def streamify(gen):
     """
@@ -40,3 +41,10 @@ def buffer_stream(stream,length,frac):
             rem -= 1
         yield buf[0]
         del buf[0]
+
+def amp(freq,h,t):
+    """
+    Returns the amplitude of a single point given the frequency,
+    h = 2*pi / samprate, and running time in samples.
+    """
+    return math.sin(t*float(freq)*h)
