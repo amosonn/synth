@@ -35,7 +35,7 @@ def buffer_stream(stream,length,frac):
             except StopIteration:
                 for x in buf:
                     yield x
-                    break
+                break
             buf.append(val)
             rem -= 1
         yield buf[0]
