@@ -23,5 +23,4 @@ def wav_write(fname,stream,rate=44100,width=2,channels=1):
 
 def play(stream,duration,rate=44100):
     with AudioIO as player:
-        # TODO: add rate to play.
-        player.play(stream.limit(duration*rate)) 
+        player.play(stream.limit(duration*rate),rate) 
