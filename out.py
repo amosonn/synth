@@ -2,6 +2,7 @@
 wav_write.
 """
 import wave
+from audiolazy import AudioIO
 
 def wav_write(fname,stream,rate=44100,width=2,channels=1):
     """
@@ -19,3 +20,8 @@ def wav_write(fname,stream,rate=44100,width=2,channels=1):
             w.writeframes(a)
     stream.close()
     w.close()
+
+def play(stream,duration,rate=44100):
+    with AudioIO as player:
+        # TODO: add rate to play.
+        player.play(stream.limit(duration*rate)) 
