@@ -26,8 +26,9 @@ def buffer_stream(stream,length,frac):
     int_to_read = int(to_read)
     rem = to_read - int_to_read
     buf = stream.take(int_to_read)
+    op_frac = 1 - frac
     while True:
-        rem += frac
+        rem += op_frac
         if rem >= 1:
             try:
                 val = stream.take()
