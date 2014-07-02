@@ -1,10 +1,8 @@
 """
 A single bit of sound, and useful operations on such and streams of such.
 """
-ZERO_VAL = 0 # self.data's zero.
-from .tools import streamify, amp, sHz
-
-import .tools
+from .tools import streamify, sHz
+from . import tools
 
 class SoundBit(object):
     """
@@ -68,7 +66,7 @@ class SoundBit(object):
             Return:
                 The sum of amplitudes of all sines in sound_bit at time t.
         """
-        return sum([amplitude * tools.sine_amp(freq,h,t) for \
+        return sum([amp * tools.sine_amp(freq,h,t) for \
             freq, amp in self._data.items()])
 
     def __add__(self, other):
@@ -123,7 +121,7 @@ def sb_to_amp(stream,rate=44100):
     """
     s,h = sHz(rate)
     for t,sb in enumerate(stream):
-        yield sb.amp(h,t)
+        yield sb.get_amp(h,t)
 
 def _iadd_dict(d1,d2):
     """
