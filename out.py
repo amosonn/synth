@@ -28,4 +28,4 @@ def play(stream,duration,ratio=-1,rate=44100):
             player.play(nat_buffer_stream(stream,int(rate*duration),ratio), \
                 rate=rate) 
         else:
-            player.play(stream.limit(int(rate*duration)),rate=rate) 
+            player.play(stream.take(int(rate*duration)),rate=rate) 
