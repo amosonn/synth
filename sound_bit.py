@@ -49,7 +49,7 @@ class SoundBit(object):
             # coefficient of the freqs.
             c = i+1
             iadd_dict(self._data,{c*freq: gain*amp for freq,amp in \
-                d.iteritems()}
+                d.iteritems()})
 
     def __add__(self, other):
         """
