@@ -1,5 +1,7 @@
 ZERO_VAL = 0 # self.data's zero.
 
+import .tools
+
 class SoundBit(object):
     """
     The smallest unit of measure for sound, as implemented in this code/
@@ -50,6 +52,19 @@ class SoundBit(object):
             c = i+1
             iadd_dict(self._data,{c*freq: gain*amp for freq,amp in \
                 d.iteritems()})
+    
+    def get_amp(self, h, t):
+        """
+            Return amplitude at a given point in time.
+            
+            Input:
+                h: 2*pi / samprate.
+                t: sample index (not sec).
+            Return:
+                The sum of amplitudes of all sines in sound_bit at time t.
+        """
+        return sum([amplitude * tools.sine_amp(freq,h,t) for \
+            freq, amp in self._data.items()])
 
     def __add__(self, other):
         """
