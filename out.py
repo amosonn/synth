@@ -3,7 +3,7 @@ wav_write.
 """
 import wave
 from audiolazy import AudioIO
-from .tools import buffer_stream
+from .tools import nat_buffer_stream
 
 def wav_write(fname,stream,rate=44100,width=2,channels=1):
     """
@@ -22,6 +22,10 @@ def wav_write(fname,stream,rate=44100,width=2,channels=1):
     stream.close()
     w.close()
 
-def play(stream,duration,frac=0.0,rate=44100):
+def play(stream,duration,ratio=-1,rate=44100):
     with AudioIO(True) as player:
-        player.play(buffer_stream(stream,int(rate*duration),frac),rate=rate) 
+        if ratio != -1:
+            player.play(nat_buffer_stream(stream,int(rate*duration),ratio), \
+                rate=rate) 
+        else:
+            player.play(stream.limit(int(rate*duration)),rate=rate) 
