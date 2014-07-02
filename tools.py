@@ -52,6 +52,25 @@ def buffer_stream(stream,length,frac):
                 raise AssertionError("Iterator should be empty.")
         del buf[0]
 
+@streamify
+def nat_buffer_stream(stream,length,ratio):
+    """
+    Assuming only a given length of a given stream is wanted, buffers
+    a fraction of it required to read from the stream only once every
+    ratio outputs.
+    """
+    stream.limit(length)
+    to_read = int(math.ceil(length * float(ratio-1) / ratio))
+    buf = stream.take(to_read)
+    for val in stream:
+        buf.append(val)
+        for i in xrange(ratio):
+            yield buf[i]
+        del buf[:ratio]
+    for val in buf:
+        yield val
+
+
 def amp(freq,h,t):
     """
     Returns the amplitude of a single point given the frequency,
