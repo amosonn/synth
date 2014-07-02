@@ -1,6 +1,13 @@
 """
 A single bit of sound, and some basic functions operating on them.
 """
+import math
+
+# The range of frequencies we work in is around [20,20000].
+# We want to work in log scale, preferably log2 so ocatves are perfect.
+# our range in log2 is [4,14]. We want to work with ints, so we scale this by
+SCALE = 1000
+# so now we have 10000 different freqs.
 
 from .tools import streamify, sHz
 from . import tools
@@ -10,14 +17,18 @@ class SoundBit(object):
     The smallest unit of measure for sound, as implemented in this code.
     Contains frquencies and corresponding amplitudes.
     """
-    def __init__(self, data_dict):
+    def __init__(self, data_dict=None):
         """
         Init SoundBit.
         
         Input:
             data_dict: A dictionary.
         """
-        self._data = data_dict.copy()
+        if data_dict is None:
+            self._data = {}
+        else:
+            self._data = {_lin_to_log(freq): amp for \
+                (freq,amp) in data_dict.iteritems()}
     
     def __iadd__(self, other):
         """
@@ -53,8 +64,12 @@ class SoundBit(object):
         for i,gain in enumerate(gain_list):
             if gain > 0:
                 # coefficient of the freqs.
-                c = i+1
-                _iadd_dict(self._data,{c*freq: gain*amp for freq,amp in \
+                if i < len(INT_COEFF_TABLE):
+                    c = INT_COEFF_TABLE[i]
+                else:
+                    c = _lin_to_log(i+1)
+                    INT_COEFF_TABLE[i] = c
+                _iadd_dict(self._data,{c+lfreq: gain*amp for lfreq,amp in \
                     d.iteritems()})
     
     def get_amp(self, h, t):
@@ -67,8 +82,8 @@ class SoundBit(object):
             Return:
                 The sum of amplitudes of all sines in sound_bit at time t.
         """
-        return sum([amp * tools.sine_amp(freq,h,t) for \
-            freq, amp in self._data.items()])
+        return sum([amp * tools.sine_amp(_log_to_lin(lfreq),h,t) for \
+            lfreq, amp in self._data.items()])
 
     def __add__(self, other):
         """
@@ -109,7 +124,9 @@ class SoundBit(object):
         return "SoundBit: %s" % (self._data,)
     
     def copy(self):
-        return SoundBit(self._data)
+        sb = SoundBit()
+        sb._data = self._data.copy()
+        return sb
 
 @streamify
 def sb_to_amp(stream,rate=44100):
@@ -132,3 +149,17 @@ def _iadd_dict(d1,d2):
     for key_other, val_other in d2.iteritems():
         d1.setdefault(key_other,0)
         d1[key_other] += val_other
+
+def _lin_to_log(lin):
+    """
+    Convert from linear scale (freq in Hz) to log scale (4000 to 14000)
+    """
+    return int(SCALE * math.log(lin,2))
+
+def _log_to_lin(log):
+    """
+    Convert from log scale (4000 to 14000) to linear scale (freq in Hz)
+    """
+    return 2 ** (float(log)/SCALE)
+
+INT_COEFF_TABLE = [_lin_to_log(n) for n in xrange(1,20)]
