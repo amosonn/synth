@@ -1,5 +1,5 @@
 """
-A single bit of sound, and useful operations on such and streams of such.
+A single bit of sound, and some basic functions operating on them.
 """
 
 from .tools import streamify, sHz
