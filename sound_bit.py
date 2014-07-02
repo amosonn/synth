@@ -79,6 +79,9 @@ class SoundBit(object):
         if not isinstance(other, SoundBit):
             raise TypeError("SoundBit can only be compared to SoundBit.")
         return self._dict == other._dict
+
+    def __ne__(self,other):
+        return not self == other
     
     def copy(self):
         return SoundBit(self._data)
