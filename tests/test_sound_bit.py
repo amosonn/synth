@@ -1,4 +1,7 @@
 from synth.sound_bit import SoundBit
+from synth import tools
+
+RATE = 44100
 
 def test_add():
     """
@@ -31,3 +34,18 @@ def test_add():
     assert sb1 == SoundBit(d1)
     assert sb2 == SoundBit(d2)
     assert result_sb == SoundBit(expected_result_dict)
+
+def test_get_amp_single_freq():
+    freq = 1
+    amp = 1
+    sb = SoundBit({freq:amp})
+    
+    s, Hz = tools.sHz(RATE)
+    
+    t_list = range(2*RATE)
+
+    get_amp_results = [sb.get_amp(Hz, t) for t in t_list]
+    direct_compute_results = [tools.sine_amp(freq, Hz, t) for t in t_list]
+    
+    assert get_amp_results == direct_compute_results
+    
