@@ -1,10 +1,14 @@
+"""
+A single bit of sound, and useful operations on such and streams of such.
+"""
 ZERO_VAL = 0 # self.data's zero.
+from .tools import streamify, amp, sHz
 
 import .tools
 
 class SoundBit(object):
     """
-    The smallest unit of measure for sound, as implemented in this code/
+    The smallest unit of measure for sound, as implemented in this code.
     Contains frquencies and corresponding amplitudes.
     """
     def __init__(self, data_dict):
@@ -25,7 +29,7 @@ class SoundBit(object):
         if not isinstance(other, SoundBit):
             raise TypeError("SoundBit can only be added to SoundBit.")
         
-        iadd_dict(self._data,other._data)
+        _iadd_dict(self._data,other._data)
         return self
 
     def __imul__(self,other):
@@ -48,10 +52,11 @@ class SoundBit(object):
         d = self._data
         self._data = {}
         for i,gain in enumerate(gain_list):
-            # coefficient of the freqs.
-            c = i+1
-            iadd_dict(self._data,{c*freq: gain*amp for freq,amp in \
-                d.iteritems()})
+            if gain > 0:
+                # coefficient of the freqs.
+                c = i+1
+                _iadd_dict(self._data,{c*freq: gain*amp for freq,amp in \
+                    d.iteritems()})
     
     def get_amp(self, h, t):
         """
@@ -107,7 +112,20 @@ class SoundBit(object):
     def copy(self):
         return SoundBit(self._data)
 
-def iadd_dict(d1,d2):
+@streamify
+def sb_to_amp(stream,rate=44100):
+    """
+    Convert a stream of sbs to a stream of [-1,1] floats.
+
+    Input:
+        stream: audiolazy.Stream(SoundBit)
+        rate: samprate in Hz
+    """
+    s,h = sHz(rate)
+    for t,sb in enumerate(stream):
+        yield sb.amp(h,t)
+
+def _iadd_dict(d1,d2):
     """
     Add the (key,values) in d2 to d1; if a key is present in both, the values are
     added. Is preformed in-place.
