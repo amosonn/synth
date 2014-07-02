@@ -29,5 +29,5 @@ def test_add():
     assert d2 == d2_backup
     assert expected_result_dict == expected_result_dict_backup
     assert sb1 == SoundBit(d1)
-    assert sb1 == SoundBit(d2)
+    assert sb2 == SoundBit(d2)
     assert result_sb == SoundBit(expected_result_dict)
