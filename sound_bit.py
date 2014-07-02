@@ -1,10 +1,9 @@
 """
 A single bit of sound, and useful operations on such and streams of such.
 """
-ZERO_VAL = 0 # self.data's zero.
-from .tools import streamify, amp, sHz
 
-import .tools
+from .tools import streamify, sHz
+from . import tools
 
 class SoundBit(object):
     """
@@ -50,7 +49,7 @@ class SoundBit(object):
         the 1st is the gain of the first harmony (2*freq), and so on.
         """
         d = self._data
-        self._data = {}
+        self._data = {}get_amp
         for i,gain in enumerate(gain_list):
             if gain > 0:
                 # coefficient of the freqs.
