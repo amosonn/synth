@@ -71,9 +71,13 @@ def nat_buffer_stream(stream,length,ratio):
         yield val
 
 
-def amp(freq,h,t):
+def sine_amp(freq,h,t):
     """
-    Returns the amplitude of a single point given the frequency,
-    h = 2*pi / samprate, and running time in samples.
+    Returns the amplitude of a sine.
+    
+    Input:
+        freq: frequency in Hz.
+        h: 2*pi / samprate.
+        t: sample index (not sec).
     """
     return math.sin(t*float(freq)*h)

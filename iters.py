@@ -3,7 +3,7 @@ iterators.
 """
 import itertools as it
 
-from .tools import streamify, amp, sHz
+from .tools import streamify, sine_amp, sHz
 
 @streamify
 def sine_iter(freq,gain=1,samprate=44100):
@@ -14,4 +14,4 @@ def sine_iter(freq,gain=1,samprate=44100):
     """
     s,h = sHz(samprate)
     for i in it.count():
-        yield amp(freq,h,i)
+        yield sine_amp(freq,h,i)
