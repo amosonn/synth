@@ -70,7 +70,6 @@ def nat_buffer_stream(stream,length,ratio):
     for val in buf:
         yield val
 
-
 def amp(freq,h,t):
     """
     Returns the amplitude of a single point given the frequency,
