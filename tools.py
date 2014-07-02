@@ -80,3 +80,20 @@ def sine_amp(freq,h,t):
         t: sample index (not sec).
     """
     return math.sin(t*float(freq)*h)
+
+def frange(start,end=None,step=None):
+    """
+    like xrange but floating-point.
+    """
+    if end is None:
+        end = start
+        start = 0.0
+    else:
+        start = float(start)
+    if step is None:
+        step = 1.0
+    else:
+        step = float(step)
+    while start != end:
+        yield start
+        start += step
