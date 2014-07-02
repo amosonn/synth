@@ -1,21 +1,45 @@
 ZERO_VAL = 0 # self.data's zero.
 
 class SoundBit(object):
+    """
+    The smallest unit of measure for sound, as implemented in this code/
+    Contains frquencies and corresponding amplitudes.
+    """
     def __init__(self, data_dict):
-        self._data = data_dict
-    
-    def get_data(self, key):
-        return self._data
+        """
+        Init SoundBit.
+        
+        Input:
+            data_dict: A dictionary.
+        """
+        self._data = data_dict.copy()
     
     def __add__(self, other):
-        joined_data = dict()
+        """
+        Add operator.
         
-        data_other = other.get_data()
+        Adds the amplitudes of each frequency.
+        """
+        soundbit_copy = self.copy()
         
-        for (key_self, val_self) in self._data.iteritems():
-            val_other = data_other.get(key, ZERO_VAL)
-            joined_data[key_self] = val_self + val_other
+        soundbit_copy += other
         
-        for (key_other, val_other) in data_other.iteritems():
-            if key_other not in self._data:
-                joined_data[key_other] = val_other
+        return soundbit_copy
+    
+    def __iadd__(self, other):
+        """
+        Add operator.
+        
+        Adds the amplitudes of each frequency.
+        """
+        if not isinstance(other, SoundBit):
+            raise TypeError('SoundBit can only be added to SoundBit.')
+        
+        for (key_other, val_other) in other._data.iteritems():
+            self._data.setdefault(key_other,0)
+            self._data[key_other] += val_other
+        
+        return self
+    
+    def copy(self):
+        return SoundBit(self._data)
